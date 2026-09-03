@@ -45,7 +45,8 @@ class HookTests(unittest.TestCase):
             with self.subTest(model=model):
                 payload = json.loads(run_hook(model).stdout)
                 context = payload["hookSpecificOutput"]["additionalContext"]
-                self.assertIn("Use Luna xhigh", context)
+                self.assertIn("Use Luna `high`", context)
+                self.assertIn("Use Luna `xhigh`", context)
 
     def test_does_not_activate_for_other_models(self) -> None:
         for model in ("gpt-5.6-terra", "gpt-5.6-luna", "gpt-5.5", ""):
@@ -70,7 +71,7 @@ class HookTests(unittest.TestCase):
     def test_policy_uses_absolute_guide_path(self) -> None:
         payload = json.loads(run_hook("gpt-5.6-sol").stdout)
         context = payload["hookSpecificOutput"]["additionalContext"]
-        self.assertIn("do not start or continue Luna subagents", context)
+        self.assertIn("stop Luna workers", context)
         self.assertIn("ignore their results for that turn", context)
         self.assertNotIn("`delegation-guide.md`", context)
         self.assertIn(str(PLUGIN_ROOT / "skills/solute/references/delegation-guide.md"), context)

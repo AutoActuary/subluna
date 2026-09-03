@@ -1,6 +1,6 @@
 interface:
   display_name: "Solute"
-  short_description: "Sol-led orchestration with Luna workers"
+  short_description: "Sol-led orchestration with earlier Luna delegation"
   default_prompt: "Use $solute to execute this task with Luna workers."
 
 policy:

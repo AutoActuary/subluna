@@ -62,6 +62,9 @@ class RepositoryTests(unittest.TestCase):
             ROOT / "plugins/solute/skills/solute/references/policy.md"
         ).read_text(encoding="utf-8")
         self.assertLess(len(policy), 1000)
+        self.assertIn("When economics are close, delegate", policy)
+        self.assertIn("Use Luna `high`", policy)
+        self.assertIn("Use Luna `xhigh`", policy)
         self.assertIn("Return only outcome", policy)
         self.assertIn("delegation-guide.md", policy)
 

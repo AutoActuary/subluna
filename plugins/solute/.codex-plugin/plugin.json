@@ -1,7 +1,7 @@
 {
   "name": "solute",
-  "version": "0.2.2+codex.20260901111004",
-  "description": "Sol-led orchestration using Luna for bounded task execution. Remove with: codex plugin remove solute@solute",
+  "version": "0.2.2-aggressive.1+codex.20260903113304",
+  "description": "Aggressive Luna variant of Sol-led orchestration. Remove with: codex plugin remove solute@solute",
   "author": {
     "name": "AutoActuary",
     "url": "https://github.com/autoactuary"
@@ -18,8 +18,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Solute",
-    "shortDescription": "Sol judgment, Luna execution.",
-    "longDescription": "Automatically gives Sol a compact policy for delegating bounded work to Luna while retaining design, integration, and final judgment.",
+    "shortDescription": "Sol judgment, earlier Luna execution.",
+    "longDescription": "Automatically gives Sol a compact policy that delegates separable work to Luna earlier while retaining architecture, integration, and final judgment.",
     "developerName": "AutoActuary",
     "category": "Productivity",
     "capabilities": [

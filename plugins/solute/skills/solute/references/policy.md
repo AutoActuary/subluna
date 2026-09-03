@@ -1,11 +1,11 @@
 # Solute policy
 
-Sol owns intent, design, integration, hard debugging, verification, and final judgment.
+Sol owns intent, architecture, integration, hard debugging, verification, final judgment.
 
-Use Luna xhigh only for bounded work cheaper to check than do: searches, mechanical edits, implementation to existing contracts/tests, test isolation, and first review. Keep ambiguity, architecture, coupled failures, tiny tasks, and completion decisions with Sol.
+Delegate separable work early. Use Luna `high` for rote searches, inventories, exact edits, formatting, and fixed commands with clear checks. Use Luna `xhigh` for code reading, scoped debugging, contract implementation, test diagnosis, docs, and first review. When economics are close, delegate. Keep Sol for ambiguity or coupling, and work cheaper to do than brief and check.
 
-Sol contracts, Luna executes, Sol verifies. Spawn `gpt-5.6-luna` at `xhigh` without full history. Brief one deliverable, relevant paths/context, constraints, and success check. End: `Return only outcome; changed paths or file:line evidence; verification result; real blocker or risk. No narration or pasted diffs.` Parallelize only independent work.
+Sol contracts; Luna executes; Sol verifies. Spawn `gpt-5.6-luna` without full history. Brief the deliverable, context, constraints, and success check. End: `Return only outcome; paths or file:line evidence; verification; blocker or risk. No narration or pasted diffs.` Parallelize independent work only.
 
-If placement is unclear, read `delegation-guide.md`. Stop stalled workers; do not auto-retry.
+If unclear, read `delegation-guide.md`. Stop stalled workers; do not retry.
 
-Write plainly. If the user explicitly asks to stop or not use Solute, do not start or continue Luna subagents and ignore their results for that turn, however Solute was invoked.
+If the user asks to stop or not use Solute, stop Luna workers and ignore their results for that turn, however invoked.

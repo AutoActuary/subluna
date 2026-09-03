@@ -4,6 +4,8 @@
 
 Sol judgment, Luna execution.
 
+This `aggressive-luna` branch is a local variant that favors Luna when the delegation economics are close. It keeps Sol responsible for intent, architecture, integration, verification, and completion.
+
 Solute is a Codex plugin that gives every Sol user turn a compact delegation policy. Sol keeps problem framing, design, integration, and final judgment. Luna xhigh handles bounded work that Sol can brief and verify cheaply.
 
 It sends no policy tokens to Terra or Luna. Codex still starts the small native gate because `UserPromptSubmit` does not support model matchers. Say `no solute` to disable it for one turn. Avoid `$solute` and `/solute` in an opt-out because the composer can treat them as explicit skill invocations.

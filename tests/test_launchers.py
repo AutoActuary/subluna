@@ -71,7 +71,9 @@ class LauncherTests(unittest.TestCase):
             check=True,
         )
         payload = json.loads(result.stdout)
-        self.assertIn("Use Luna xhigh", payload["hookSpecificOutput"]["additionalContext"])
+        context = payload["hookSpecificOutput"]["additionalContext"]
+        self.assertIn("Use Luna `high`", context)
+        self.assertIn("Use Luna `xhigh`", context)
 
     def test_hook_launcher_is_silent_for_terra(self) -> None:
         event = {

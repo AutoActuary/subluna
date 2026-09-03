@@ -1,6 +1,6 @@
 ---
 name: solute
-description: Use Sol as the lead and Luna xhigh for bounded execution work while preserving Sol-level judgment, integration, and verification.
+description: Use Sol as the lead and delegate separable execution work early to Luna high or xhigh while preserving Sol-level judgment, integration, and verification.
 ---
 
 # Solute
