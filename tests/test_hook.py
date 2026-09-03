@@ -11,6 +11,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_ROOT = ROOT / "plugins/solute"
+POLICY_PATH = PLUGIN_ROOT / "skills/solute/references/policy.md"
+GUIDE_PATH = PLUGIN_ROOT / "skills/solute/references/delegation-guide.md"
+
+
+def expected_context() -> str:
+    return (
+        POLICY_PATH.read_text(encoding="utf-8")
+        .strip()
+        .replace("`delegation-guide.md`", f"`{GUIDE_PATH}`")
+    )
 
 
 def hook_command() -> list[str]:
@@ -45,8 +55,7 @@ class HookTests(unittest.TestCase):
             with self.subTest(model=model):
                 payload = json.loads(run_hook(model).stdout)
                 context = payload["hookSpecificOutput"]["additionalContext"]
-                self.assertIn("Use Luna `high`", context)
-                self.assertIn("Use Luna `xhigh`", context)
+                self.assertEqual(context, expected_context())
 
     def test_does_not_activate_for_other_models(self) -> None:
         for model in ("gpt-5.6-terra", "gpt-5.6-luna", "gpt-5.5", ""):
@@ -71,10 +80,9 @@ class HookTests(unittest.TestCase):
     def test_policy_uses_absolute_guide_path(self) -> None:
         payload = json.loads(run_hook("gpt-5.6-sol").stdout)
         context = payload["hookSpecificOutput"]["additionalContext"]
-        self.assertIn("stop Luna workers", context)
-        self.assertIn("ignore their results for that turn", context)
+        self.assertEqual(context, expected_context())
         self.assertNotIn("`delegation-guide.md`", context)
-        self.assertIn(str(PLUGIN_ROOT / "skills/solute/references/delegation-guide.md"), context)
+        self.assertIn(str(GUIDE_PATH), context)
 
 
 if __name__ == "__main__":

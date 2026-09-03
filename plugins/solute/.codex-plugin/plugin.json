@@ -1,6 +1,6 @@
 {
   "name": "solute",
-  "version": "0.2.2-aggressive.1+codex.20260903113304",
+  "version": "0.2.2-aggressive.1+codex.20260903122125",
   "description": "Aggressive Luna variant of Sol-led orchestration. Remove with: codex plugin remove solute@solute",
   "author": {
     "name": "AutoActuary",
