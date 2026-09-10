@@ -13,6 +13,7 @@ Use this only when the compact policy does not clearly place the work. The aim i
 | Read several files and report the existing pattern | Luna xhigh | Luna can compress repository context before the lead decides. |
 | Implement a named function against existing tests | Luna xhigh | Explicit contract and pass condition. |
 | Make a small edit that follows a nearby pattern | Luna xhigh | The pattern supplies the contract and review stays cheap. |
+| Apply an explicit multi-file refactor or rename | Luna xhigh | Boundaries and checks are clear; the lead verifies integration. |
 | Isolate a test failure | Luna xhigh | Commands constrain the answer, but diagnosis needs reasoning. |
 | Investigate a scoped bug with a known symptom | Luna xhigh | The fault domain is narrow enough to inspect cheaply. |
 | Draft docs from settled behavior | Luna xhigh | The facts are fixed and the lead can review the result quickly. |
