@@ -1,0 +1,7 @@
+interface:
+  display_name: "SubLuna"
+  short_description: "Lead-model orchestration with Luna workers"
+  default_prompt: "Use $subluna to execute this task with Luna workers."
+
+policy:
+  allow_implicit_invocation: false

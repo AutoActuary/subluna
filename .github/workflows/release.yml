@@ -1,4 +1,4 @@
-# SOLUTE-MANAGED: reproducible native hook release builds.
+# SUBLUNA-MANAGED: reproducible native hook release builds.
 name: Release native hook
 
 on:
@@ -16,28 +16,28 @@ jobs:
         include:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            asset: solute-hook-windows-x86_64.exe
-            binary: native-hook/target/x86_64-pc-windows-msvc/release/solute-hook.exe
+            asset: subluna-hook-windows-x86_64.exe
+            binary: native-hook/target/x86_64-pc-windows-msvc/release/subluna-hook.exe
           - os: windows-11-arm
             target: aarch64-pc-windows-msvc
-            asset: solute-hook-windows-aarch64.exe
-            binary: native-hook/target/aarch64-pc-windows-msvc/release/solute-hook.exe
+            asset: subluna-hook-windows-aarch64.exe
+            binary: native-hook/target/aarch64-pc-windows-msvc/release/subluna-hook.exe
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            asset: solute-hook-linux-x86_64
-            binary: native-hook/target/x86_64-unknown-linux-gnu/release/solute-hook
+            asset: subluna-hook-linux-x86_64
+            binary: native-hook/target/x86_64-unknown-linux-gnu/release/subluna-hook
           - os: ubuntu-24.04-arm
             target: aarch64-unknown-linux-gnu
-            asset: solute-hook-linux-aarch64
-            binary: native-hook/target/aarch64-unknown-linux-gnu/release/solute-hook
+            asset: subluna-hook-linux-aarch64
+            binary: native-hook/target/aarch64-unknown-linux-gnu/release/subluna-hook
           - os: macos-15-intel
             target: x86_64-apple-darwin
-            asset: solute-hook-darwin-x86_64
-            binary: native-hook/target/x86_64-apple-darwin/release/solute-hook
+            asset: subluna-hook-darwin-x86_64
+            binary: native-hook/target/x86_64-apple-darwin/release/subluna-hook
           - os: macos-15
             target: aarch64-apple-darwin
-            asset: solute-hook-darwin-aarch64
-            binary: native-hook/target/aarch64-apple-darwin/release/solute-hook
+            asset: subluna-hook-darwin-aarch64
+            binary: native-hook/target/aarch64-apple-darwin/release/subluna-hook
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7

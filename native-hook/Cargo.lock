@@ -75,8 +75,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "solute-hook"
-version = "0.2.2"
+name = "subluna-hook"
+version = "0.3.0"
 dependencies = [
  "serde_json",
 ]

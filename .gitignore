@@ -1,6 +1,6 @@
-# SOLUTE-MANAGED: repository-only ignore rules.
+# SUBLUNA-MANAGED: repository-only ignore rules.
 __pycache__/
 *.py[cod]
 .tmp/
 native-hook/target/
-plugins/solute/bin/
+plugins/subluna/bin/

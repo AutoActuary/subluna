@@ -1,4 +1,4 @@
-// SOLUTE-MANAGED: native hot-path hook. Remove with `codex plugin remove solute@solute`.
+// SUBLUNA-MANAGED: native hot-path hook. Remove with `codex plugin remove subluna@subluna`.
 
 use serde_json::{Value, json};
 use std::env;
@@ -7,27 +7,31 @@ use std::fs;
 use std::io::{self, Write};
 use std::path::PathBuf;
 
-fn is_sol_model(model: &str) -> bool {
+fn is_lead_model(model: &str) -> bool {
     let slug = model.trim().to_ascii_lowercase();
-    slug == "sol" || slug.ends_with("-sol") || slug.contains("-sol-")
+    ["sol", "astra"].iter().any(|family| {
+        slug == *family
+            || slug.ends_with(&format!("-{family}"))
+            || slug.contains(&format!("-{family}-"))
+    })
 }
 
 fn opted_out(prompt: &str) -> bool {
     let prompt = prompt
         .to_ascii_lowercase()
         .replace("don’t use", "don't use")
-        .replace("[$solute:solute]", "$solute")
-        .replace("[$solute]", "$solute");
+        .replace("[$subluna:subluna]", "$subluna")
+        .replace("[$subluna]", "$subluna");
     [
-        "no solute",
-        "no /solute",
-        "no $solute",
-        "don't use solute",
-        "don't use /solute",
-        "don't use $solute",
-        "do not use solute",
-        "do not use /solute",
-        "do not use $solute",
+        "no subluna",
+        "no /subluna",
+        "no $subluna",
+        "don't use subluna",
+        "don't use /subluna",
+        "don't use $subluna",
+        "do not use subluna",
+        "do not use /subluna",
+        "do not use $subluna",
     ]
     .iter()
     .any(|phrase| prompt.contains(phrase))
@@ -38,7 +42,7 @@ fn should_activate(event: &Value) -> bool {
         && event
             .get("model")
             .and_then(Value::as_str)
-            .is_some_and(is_sol_model)
+            .is_some_and(is_lead_model)
         && !event
             .get("prompt")
             .and_then(Value::as_str)
@@ -60,9 +64,9 @@ fn plugin_root() -> Result<PathBuf, Box<dyn Error>> {
 fn load_policy() -> Result<String, Box<dyn Error>> {
     let references = plugin_root()?
         .join("skills")
-        .join("solute")
+        .join("subluna")
         .join("references");
-    let policy = fs::read_to_string(references.join("policy.md"))?;
+    let policy = fs::read_to_string(references.join("policy.md"))?.replace("\r\n", "\n");
     let guide = references.join("delegation-guide.md");
     Ok(policy
         .trim()
@@ -87,38 +91,45 @@ fn run() -> Result<(), Box<dyn Error>> {
 
 fn main() {
     if let Err(error) = run() {
-        eprintln!("Solute hook skipped: {error}");
+        eprintln!("SubLuna hook skipped: {error}");
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{is_sol_model, opted_out};
+    use super::{is_lead_model, opted_out};
 
     #[test]
-    fn model_gate_accepts_only_sol_slugs() {
-        for model in ["sol", "gpt-5.6-sol", "gpt-5.7-sol", "vendor-sol-preview"] {
-            assert!(is_sol_model(model), "{model}");
+    fn model_gate_accepts_sol_and_astra_slugs() {
+        for model in [
+            "sol",
+            "gpt-5.6-sol",
+            "vendor-sol-preview",
+            "astra",
+            "gpt-6-astra",
+            "vendor-astra-preview",
+        ] {
+            assert!(is_lead_model(model), "{model}");
         }
         for model in ["", "gpt-5.6-terra", "gpt-5.6-luna", "gpt-5.5"] {
-            assert!(!is_sol_model(model), "{model}");
+            assert!(!is_lead_model(model), "{model}");
         }
     }
 
     #[test]
     fn opt_out_forms_are_case_insensitive() {
         for prompt in [
-            "No solute for this one",
-            "NO /SOLUTE",
-            "No $solute today",
-            "Don't use /solute for this one",
-            "DO NOT USE SOLUTE",
-            "Please don't use $solute today",
-            "No [$solute:solute](C:/plugins/solute/skills/solute/SKILL.md)",
-            "Don’t use [$solute](C:/skills/solute/SKILL.md)",
+            "No subluna for this one",
+            "NO /SUBLUNA",
+            "No $subluna today",
+            "Don't use /subluna for this one",
+            "DO NOT USE SUBLUNA",
+            "Please don't use $subluna today",
+            "No [$subluna:subluna](C:/plugins/subluna/skills/subluna/SKILL.md)",
+            "Don’t use [$subluna](C:/skills/subluna/SKILL.md)",
         ] {
             assert!(opted_out(prompt), "{prompt}");
         }
-        assert!(!opted_out("Use Solute"));
+        assert!(!opted_out("Use SubLuna"));
     }
 }

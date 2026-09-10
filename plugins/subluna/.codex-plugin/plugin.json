@@ -1,0 +1,33 @@
+{
+  "name": "subluna",
+  "version": "0.3.0",
+  "description": "Economical Luna delegation for lead models. Remove with: codex plugin remove subluna@subluna",
+  "author": {
+    "name": "AutoActuary",
+    "url": "https://github.com/autoactuary"
+  },
+  "homepage": "https://github.com/autoactuary/subluna",
+  "repository": "https://github.com/autoactuary/subluna",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "orchestration",
+    "sol",
+    "astra",
+    "luna"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "SubLuna",
+    "shortDescription": "Lead judgment, earlier Luna execution.",
+    "longDescription": "Automatically gives Sol and Astra a compact policy that delegates separable work to Luna earlier while retaining architecture, integration, and final judgment.",
+    "developerName": "AutoActuary",
+    "category": "Productivity",
+    "capabilities": [
+      "Orchestration"
+    ],
+    "defaultPrompt": [
+      "Use $subluna to complete this task economically."
+    ]
+  }
+}

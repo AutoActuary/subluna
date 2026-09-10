@@ -1,14 +1,14 @@
 {
-  "name": "solute",
+  "name": "subluna",
   "interface": {
-    "displayName": "Solute"
+    "displayName": "SubLuna"
   },
   "plugins": [
     {
-      "name": "solute",
+      "name": "subluna",
       "source": {
         "source": "local",
-        "path": "./plugins/solute"
+        "path": "./plugins/subluna"
       },
       "policy": {
         "installation": "AVAILABLE",

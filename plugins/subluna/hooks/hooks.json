@@ -1,0 +1,18 @@
+{
+  "description": "SUBLUNA-MANAGED: activates the SubLuna policy for Sol and Astra user turns. Remove with codex plugin remove subluna@subluna.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$PLUGIN_ROOT/bin/subluna-hook\"",
+            "commandWindows": "cmd.exe /d /c call \"%PLUGIN_ROOT%\\bin\\subluna-hook.exe\"",
+            "timeout": 1,
+            "additionalContextLimit": 1200
+          }
+        ]
+      }
+    ]
+  }
+}

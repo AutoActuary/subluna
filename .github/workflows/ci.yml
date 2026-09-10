@@ -1,4 +1,4 @@
-# SOLUTE-MANAGED: Windows and Linux compatibility checks.
+# SUBLUNA-MANAGED: Windows and Linux compatibility checks.
 name: Cross-platform tests
 
 on:
@@ -27,10 +27,10 @@ jobs:
       - name: Run tests
         run: python -m unittest discover -s tests -v
         env:
-          SOLUTE_RUNTIME_BINARY: ${{ runner.os == 'Windows' && format('{0}/native-hook/target/release/solute-hook.exe', github.workspace) || format('{0}/native-hook/target/release/solute-hook', github.workspace) }}
+          SUBLUNA_RUNTIME_BINARY: ${{ runner.os == 'Windows' && format('{0}/native-hook/target/release/subluna-hook.exe', github.workspace) || format('{0}/native-hook/target/release/subluna-hook', github.workspace) }}
       - name: Run Rust tests
         run: cargo test --manifest-path native-hook/Cargo.toml
       - name: Run doctor
-        run: python scripts/solute.py doctor
+        run: python scripts/subluna.py doctor
         env:
-          SOLUTE_RUNTIME_BINARY: ${{ runner.os == 'Windows' && format('{0}/native-hook/target/release/solute-hook.exe', github.workspace) || format('{0}/native-hook/target/release/solute-hook', github.workspace) }}
+          SUBLUNA_RUNTIME_BINARY: ${{ runner.os == 'Windows' && format('{0}/native-hook/target/release/subluna-hook.exe', github.workspace) || format('{0}/native-hook/target/release/subluna-hook', github.workspace) }}

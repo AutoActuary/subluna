@@ -1,4 +1,4 @@
-# SOLUTE-MANAGED: tests for Solute activation and injected policy.
+# SUBLUNA-MANAGED: tests for SubLuna activation and injected policy.
 
 from __future__ import annotations
 
@@ -10,9 +10,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN_ROOT = ROOT / "plugins/solute"
-POLICY_PATH = PLUGIN_ROOT / "skills/solute/references/policy.md"
-GUIDE_PATH = PLUGIN_ROOT / "skills/solute/references/delegation-guide.md"
+PLUGIN_ROOT = ROOT / "plugins/subluna"
+POLICY_PATH = PLUGIN_ROOT / "skills/subluna/references/policy.md"
+GUIDE_PATH = PLUGIN_ROOT / "skills/subluna/references/delegation-guide.md"
 
 
 def expected_context() -> str:
@@ -25,9 +25,9 @@ def expected_context() -> str:
 
 def hook_command() -> list[str]:
     suffix = ".exe" if os.name == "nt" else ""
-    runtime = PLUGIN_ROOT / f"bin/solute-hook{suffix}"
+    runtime = PLUGIN_ROOT / f"bin/subluna-hook{suffix}"
     if not runtime.is_file():
-        raise unittest.SkipTest("Solute runtime is not staged")
+        raise unittest.SkipTest("SubLuna runtime is not staged")
     return [str(runtime)]
 
 
@@ -50,8 +50,15 @@ def run_hook(model: str, prompt: str = "Fix the failing tests") -> subprocess.Co
 
 
 class HookTests(unittest.TestCase):
-    def test_activates_for_current_and_future_sol_slugs(self) -> None:
-        for model in ("gpt-5.6-sol", "gpt-5.7-sol", "vendor-sol-preview", "sol"):
+    def test_activates_for_sol_and_astra_slugs(self) -> None:
+        for model in (
+            "gpt-5.6-sol",
+            "vendor-sol-preview",
+            "sol",
+            "gpt-6-astra",
+            "vendor-astra-preview",
+            "astra",
+        ):
             with self.subTest(model=model):
                 payload = json.loads(run_hook(model).stdout)
                 context = payload["hookSpecificOutput"]["additionalContext"]
@@ -64,14 +71,14 @@ class HookTests(unittest.TestCase):
 
     def test_optout_is_case_insensitive_and_accepts_skill_forms(self) -> None:
         prompts = (
-            "No solute for this one",
-            "NO /SOLUTE",
-            "No $solute today",
-            "Don't use /solute for this one",
-            "DO NOT USE SOLUTE",
-            "Please don't use $solute today",
-            "No [$solute:solute](C:/plugins/solute/skills/solute/SKILL.md)",
-            "Don’t use [$solute](C:/skills/solute/SKILL.md)",
+            "No subluna for this one",
+            "NO /SUBLUNA",
+            "No $subluna today",
+            "Don't use /subluna for this one",
+            "DO NOT USE SUBLUNA",
+            "Please don't use $subluna today",
+            "No [$subluna:subluna](C:/plugins/subluna/skills/subluna/SKILL.md)",
+            "Don’t use [$subluna](C:/skills/subluna/SKILL.md)",
         )
         for prompt in prompts:
             with self.subTest(prompt=prompt):

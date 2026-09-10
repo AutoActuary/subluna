@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# SOLUTE-MANAGED: installer, uninstaller, and diagnostic entry point.
-"""Manage the Solute marketplace and plugin without editing unrelated config."""
+# SUBLUNA-MANAGED: installer, uninstaller, and diagnostic entry point.
+"""Manage the SubLuna marketplace and plugin without editing unrelated config."""
 
 from __future__ import annotations
 
@@ -18,11 +18,11 @@ from pathlib import Path
 from typing import Any
 
 
-PLUGIN = "solute"
-MARKETPLACE = "solute"
+PLUGIN = "subluna"
+MARKETPLACE = "subluna"
 MARKETPLACE_FILE = Path(".agents/plugins/marketplace.json")
-RUNTIME_VERSION = "v0.2.2"
-RUNTIME_REPOSITORY = "https://github.com/AutoActuary/solute/releases/download"
+RUNTIME_VERSION = "v0.3.0"
+RUNTIME_REPOSITORY = "https://github.com/AutoActuary/subluna/releases/download"
 
 
 def repo_root() -> Path:
@@ -94,24 +94,24 @@ def runtime_asset() -> str:
         ("darwin", "aarch64"),
     }
     if architecture is None or (system, architecture) not in supported:
-        raise RuntimeError(f"No Solute runtime for {system}/{machine}.")
+        raise RuntimeError(f"No SubLuna runtime for {system}/{machine}.")
     suffix = ".exe" if system == "windows" else ""
-    return f"solute-hook-{system}-{architecture}{suffix}"
+    return f"subluna-hook-{system}-{architecture}{suffix}"
 
 
 def runtime_paths() -> tuple[Path, Path]:
     suffix = ".exe" if os.name == "nt" else ""
-    directory = repo_root() / "plugins/solute/bin"
-    return directory / f"solute-hook{suffix}", directory / "runtime-version.txt"
+    directory = repo_root() / "plugins/subluna/bin"
+    return directory / f"subluna-hook{suffix}", directory / "runtime-version.txt"
 
 
 def ensure_runtime() -> Path:
     target, marker = runtime_paths()
-    supplied = os.environ.get("SOLUTE_RUNTIME_BINARY")
+    supplied = os.environ.get("SUBLUNA_RUNTIME_BINARY")
     if supplied:
         source = Path(supplied).resolve()
         if not source.is_file():
-            raise RuntimeError(f"SOLUTE_RUNTIME_BINARY does not exist: {source}")
+            raise RuntimeError(f"SUBLUNA_RUNTIME_BINARY does not exist: {source}")
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
     else:
@@ -125,11 +125,11 @@ def ensure_runtime() -> Path:
             binary = urllib.request.urlopen(base, timeout=30).read()
             checksum = urllib.request.urlopen(f"{base}.sha256", timeout=30).read().decode()
         except OSError as exc:
-            raise RuntimeError(f"Could not download the native Solute runtime: {exc}") from exc
+            raise RuntimeError(f"Could not download the native SubLuna runtime: {exc}") from exc
         expected = checksum.split()[0].lower()
         actual = hashlib.sha256(binary).hexdigest()
         if actual != expected:
-            raise RuntimeError("Downloaded Solute runtime failed its SHA-256 check.")
+            raise RuntimeError("Downloaded SubLuna runtime failed its SHA-256 check.")
         target.write_bytes(binary)
 
     if os.name != "nt":
@@ -175,9 +175,9 @@ def app_server_request(method: str, params: dict[str, Any]) -> Any:
                 "id": 0,
                 "params": {
                     "clientInfo": {
-                        "name": "solute_doctor",
-                        "title": "Solute doctor",
-                        "version": "0.2.2",
+                        "name": "subluna_doctor",
+                        "title": "SubLuna doctor",
+                        "version": "0.3.0",
                     }
                 },
             }
@@ -214,14 +214,14 @@ def install() -> int:
         if current != expected:
             raise RuntimeError(
                 f"Marketplace '{MARKETPLACE}' already points to {current}, not {expected}. "
-                "Remove or rename that marketplace before installing Solute."
+                "Remove or rename that marketplace before installing SubLuna."
             )
     else:
         run_codex("plugin", "marketplace", "add", str(root), "--json")
     run_codex("plugin", "add", f"{PLUGIN}@{MARKETPLACE}", "--json")
     print(
-        "Solute files are installed, but automatic activation is not complete yet.\n"
-        "Start a new Codex CLI session, enter /hooks, review the Solute hook, and choose Trust.\n"
+        "SubLuna files are installed, but automatic activation is not complete yet.\n"
+        "Start a new Codex CLI session, enter /hooks, review the SubLuna hook, and choose Trust.\n"
         "Then run this launcher with 'verify'."
     )
     return doctor()
@@ -248,11 +248,11 @@ def uninstall() -> int:
         ):
             failures.append(f"{label}: {(result.stderr or result.stdout).strip()}")
     if failures:
-        raise RuntimeError("Solute uninstall failed: " + "; ".join(failures))
-    runtime_directory = repo_root() / "plugins/solute/bin"
+        raise RuntimeError("SubLuna uninstall failed: " + "; ".join(failures))
+    runtime_directory = repo_root() / "plugins/subluna/bin"
     if runtime_directory.is_dir():
         shutil.rmtree(runtime_directory)
-    print("Solute plugin and marketplace registration removed. Start a new task.")
+    print("SubLuna plugin and marketplace registration removed. Start a new task.")
     return 0
 
 
@@ -261,32 +261,32 @@ def doctor() -> int:
     ensure_runtime()
     required = [
         root / MARKETPLACE_FILE,
-        root / "plugins/solute/.codex-plugin/plugin.json",
-        root / "plugins/solute/hooks/hooks.json",
+        root / "plugins/subluna/.codex-plugin/plugin.json",
+        root / "plugins/subluna/hooks/hooks.json",
         runtime_paths()[0],
         runtime_paths()[1],
-        root / "plugins/solute/skills/solute/SKILL.md",
-        root / "plugins/solute/skills/solute/references/policy.md",
-        root / "plugins/solute/skills/solute/references/delegation-guide.md",
-        root / "scripts/solute.sh",
-        root / "scripts/solute.ps1",
+        root / "plugins/subluna/skills/subluna/SKILL.md",
+        root / "plugins/subluna/skills/subluna/references/policy.md",
+        root / "plugins/subluna/skills/subluna/references/delegation-guide.md",
+        root / "scripts/subluna.sh",
+        root / "scripts/subluna.ps1",
         root / "UNINSTALL.md",
     ]
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
-        print("Missing Solute files:\n" + "\n".join(missing), file=sys.stderr)
+        print("Missing SubLuna files:\n" + "\n".join(missing), file=sys.stderr)
         return 1
     if find_codex() is None:
         print("Codex CLI is not on PATH.", file=sys.stderr)
         return 1
     marketplace = json.loads((root / MARKETPLACE_FILE).read_text(encoding="utf-8"))
     manifest = json.loads(
-        (root / "plugins/solute/.codex-plugin/plugin.json").read_text(encoding="utf-8")
+        (root / "plugins/subluna/.codex-plugin/plugin.json").read_text(encoding="utf-8")
     )
     if marketplace.get("name") != MARKETPLACE or manifest.get("name") != PLUGIN:
-        print("Solute identifiers do not match the installer.", file=sys.stderr)
+        print("SubLuna identifiers do not match the installer.", file=sys.stderr)
         return 1
-    print("Solute doctor passed.")
+    print("SubLuna doctor passed.")
     return 0
 
 
@@ -302,12 +302,12 @@ def verify() -> int:
         and hook.get("eventName") == "userPromptSubmit"
     ]
     if hooks and hooks[0].get("enabled") and hooks[0].get("trustStatus") == "trusted":
-        print("Solute verified: its hook is enabled and trusted for Sol turns.")
+        print("SubLuna verified: its hook is enabled and trusted for Sol and Astra turns.")
         return 0
     status = hooks[0].get("trustStatus", "missing") if hooks else "missing"
     print(
-        f"Solute automatic activation is not ready. Hook status: {status}.\n"
-        "Start a new Codex CLI session, enter /hooks, review the Solute hook, and choose Trust.\n"
+        f"SubLuna automatic activation is not ready. Hook status: {status}.\n"
+        "Start a new Codex CLI session, enter /hooks, review the SubLuna hook, and choose Trust.\n"
         "Run this verification again afterward.",
         file=sys.stderr,
     )
@@ -315,7 +315,7 @@ def verify() -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Install, remove, or check Solute.")
+    parser = argparse.ArgumentParser(description="Install, remove, or check SubLuna.")
     parser.add_argument("command", choices=("install", "uninstall", "doctor", "verify"))
     args = parser.parse_args()
     try:
@@ -326,7 +326,7 @@ def main() -> int:
             "verify": verify,
         }[args.command]()
     except (OSError, RuntimeError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
-        print(f"Solute {args.command} failed: {exc}", file=sys.stderr)
+        print(f"SubLuna {args.command} failed: {exc}", file=sys.stderr)
         return 1
 
 

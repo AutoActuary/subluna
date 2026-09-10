@@ -1,4 +1,4 @@
-# SOLUTE-MANAGED: platform launcher tests for Windows and POSIX systems.
+# SUBLUNA-MANAGED: platform launcher tests for Windows and POSIX systems.
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN_ROOT = ROOT / "plugins/solute"
+PLUGIN_ROOT = ROOT / "plugins/subluna"
 
 
 def powershell() -> str | None:
@@ -29,17 +29,17 @@ def manager_command(action: str) -> list[str]:
             "-ExecutionPolicy",
             "Bypass",
             "-File",
-            str(ROOT / "scripts/solute.ps1"),
+            str(ROOT / "scripts/subluna.ps1"),
             action,
         ]
-    return ["sh", str(ROOT / "scripts/solute.sh"), action]
+    return ["sh", str(ROOT / "scripts/subluna.sh"), action]
 
 
 def hook_command() -> list[str]:
     suffix = ".exe" if os.name == "nt" else ""
-    runtime = PLUGIN_ROOT / f"bin/solute-hook{suffix}"
+    runtime = PLUGIN_ROOT / f"bin/subluna-hook{suffix}"
     if not runtime.is_file():
-        raise unittest.SkipTest("Solute runtime is not staged")
+        raise unittest.SkipTest("SubLuna runtime is not staged")
     return [str(runtime)]
 
 
@@ -52,12 +52,12 @@ class LauncherTests(unittest.TestCase):
             capture_output=True,
             check=True,
         )
-        self.assertIn("Solute doctor passed", result.stdout)
+        self.assertIn("SubLuna doctor passed", result.stdout)
 
-    def test_hook_launcher_activates_for_sol(self) -> None:
+    def test_hook_launcher_activates_for_astra(self) -> None:
         event = {
             "hook_event_name": "UserPromptSubmit",
-            "model": "gpt-5.6-sol",
+            "model": "gpt-6-astra",
             "prompt": "Fix the failing test",
         }
         env = os.environ.copy()
