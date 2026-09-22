@@ -37,7 +37,3 @@ Prefer completion notifications while the lead does independent work. When waiti
 Intervene on a reported blocker, repeated failed approach, scope violation or agreed deadline. Stop or rescope unproductive work; do not blindly respawn the same failed brief. A bounded correction with a failing case is different from a blind retry.
 
 Review the diff and verification receipt, then check integration and correctness-critical risks. Retain independent verification where warranted. Do not repeat the worker's search or test sequence unless evidence is missing, unreliable or affected by integration. Return local defects to their owner; the lead keeps hard diagnosis and final acceptance.
-
-## Judge the result
-
-When usage data is available, compare worker cost plus lead dispatch, review and repair against estimated direct lead work for the same accepted outcome. Separate observed overhead from assumed replacement cost. Count cached input and output at their respective rates; reasoning is already part of output. Do not infer savings from token counts or the worker price ratio alone, or promise a fixed saving percentage.
