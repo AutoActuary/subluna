@@ -1,61 +1,43 @@
 # Delegation guide
 
-Use this only when the compact policy does not clearly place the work. The aim is fewer lead-model execution tokens without weakening its decisions.
+Optimize cost per accepted deliverable, not delegation count or worker duration. Preserve correctness. Read this only when the compact policy leaves a worthwhile dispatch or blocker question.
 
-## Mapping
+## Choose a work package
 
-| Work | Owner | Reason |
-| --- | --- | --- |
-| List files or run literal searches | Luna high | Rote collection with directly checkable output. |
-| Run fixed commands, formatters, or known tests | Luna high | The steps and pass condition are explicit. |
-| Apply an exact mechanical edit | Luna high | Little inference and a deterministic check. |
-| Find callers, usages, or affected tests | Luna xhigh | The search is bounded but interpreting relevance takes judgment. |
-| Read several files and report the existing pattern | Luna xhigh | Luna can compress repository context before the lead decides. |
-| Implement a named function against existing tests | Luna xhigh | Explicit contract and pass condition. |
-| Make a small edit that follows a nearby pattern | Luna xhigh | The pattern supplies the contract and review stays cheap. |
-| Apply an explicit multi-file refactor or rename | Luna xhigh | Boundaries and checks are clear; the lead verifies integration. |
-| Isolate a test failure | Luna xhigh | Commands constrain the answer, but diagnosis needs reasoning. |
-| Investigate a scoped bug with a known symptom | Luna xhigh | The fault domain is narrow enough to inspect cheaply. |
-| Draft docs from settled behavior | Luna xhigh | The facts are fixed and the lead can review the result quickly. |
-| Review a finished change for missed cases | Luna xhigh, then lead | Luna expands coverage; the lead judges significance. |
-| Convert an agreed design into one component | Luna xhigh | The lead already made the costly design decision. |
-| Interpret a vague request | Lead | A wrong interpretation poisons downstream work. |
-| Choose architecture or data ownership | Lead | Cross-cutting and expensive to reverse. |
-| Debug an unknown, coupled interaction | Lead first | Delegate after narrowing the fault domain. |
-| Integrate worker changes or decide completion | Lead | Requires the whole objective and tradeoffs. |
+Delegate when a short contract and checkable result replace substantial lead execution. Include briefing, review and likely repair in that decision. Cheap worker tokens do not justify repeated lead interventions.
 
-## Aggressive threshold
+| Work | Decision |
+| --- | --- |
+| One lookup or obvious correction already in view | Lead does it directly. |
+| Related searches, inventory or exact edits with fixed checks | Batch for Luna high. |
+| Component implementation, scoped diagnosis, refactor or docs from settled behavior | Luna xhigh owns the result and relevant tests. |
+| Review of a finished change | Luna xhigh checks named risks; lead judges findings. Do not add a review worker by default. |
+| Unclear requirements, architecture or coupled debugging | Lead resolves or narrows the question first. |
 
-Delegate when Luna can start from a short contract and return evidence that the lead can check directly. If the cost is close, use Luna. Keep the task only when the lead can finish it more cheaply than writing the brief and checking the answer, such as one obvious lookup or a one-line local correction already in view.
+Cluster work sharing context and file ownership. Do not split implementation, tests and ordinary local fixes across fresh workers. Keep follow-ups with the same worker while its scope still fits. Parallelize disjoint owners; sequence dependencies. Do not give a worker a larger ambiguous task merely to keep it busy longer.
 
-Use `high` only when Luna can follow explicit operations without interpreting code or deciding what a failure means. Use `xhigh` when it must understand behavior, distinguish relevant evidence, diagnose, implement from a contract, or review. A cheap but underpowered handoff wastes both the Luna attempt and the lead's recovery tokens.
+## Transfer the decisions, not the history
 
-Luna may inspect before the lead has chosen an implementation, but it must not turn that inspection into an architectural decision. Ask for facts, options, or a scoped patch. The lead still chooses the direction and decides whether the whole task is done.
-
-## Brief packing
-
-Good:
+Give the outcome, owned files, necessary context, settled interfaces, non-goals and acceptance checks. Luna can read the code; do not paste it or the lead's investigation diary.
 
 ```text
-Update parse_date() in src/date.py to accept ISO dates with Z.
-Keep naive-date behavior unchanged. Tests are in tests/test_date.py.
-Success: that file's tests pass.
-Return only outcome; changed paths or file:line evidence; verification and result; real blocker or risk. Do not narrate or paste available diffs.
+Update parse_date() to accept ISO dates ending in Z.
+Own src/date.py and tests/test_date.py. Keep naive-date behavior and the
+public API unchanged. Add regression cases; run the date tests and fix
+local failures. Escalate if this needs an API change or edits outside scope.
+Return outcome, changed paths, checks/results and unresolved risks.
 ```
 
-Wasteful: repository history, the lead's investigation diary, code Luna can read, repeated requirements, or a request for a long report. A brief should transfer the contract, not the lead's entire context.
+The worker handles ordinary implementation choices and local corrections. Escalate conflicting requirements, cross-owner changes or a blocker it cannot resolve within the contract. The lead supplies the missing decision, not a fresh transcript.
 
-## Routing trial
+## Finish without babysitting
 
-A ten-scenario comparison on 2026-08-31 had Luna xhigh and a lead model agree on the clear cases: mechanical rename, caller tracing, contract-driven implementation, and test isolation went to Luna; architecture stayed with the lead. This policy resolves close calls toward Luna:
+Prefer completion notifications while the lead does independent work. When waiting is necessary, use a bounded wait appropriate to the task. Do not alternate short waits, clock checks and empty-file checks. A timeout or quiet worker is not evidence of failure.
 
-| Scenario | Decision |
-| --- | --- |
-| Two repository searches with results to compare | Luna gathers and compresses the evidence. |
-| Deadlock with unknown fault domain | Lead until the fault domain is narrow. |
-| Review three patches and decide completeness | Luna may check coverage; the lead decides completeness. |
-| Apply an approved design to three adapters | Luna implements; the lead integrates. |
+Intervene on a reported blocker, repeated failed approach, scope violation or agreed deadline. Stop or rescope unproductive work; do not blindly respawn the same failed brief. A bounded correction with a failing case is different from a blind retry.
 
-Luna tended to accept executable work even when delegation was uneconomical. The lead must still skip a handoff whose brief and review plainly exceed the task. One bounded review also stalled for over 90 seconds and returned nothing, which supports stopping rather than automatically retrying.
+Review the diff and verification receipt, then check integration and correctness-critical risks. Retain independent verification where warranted. Do not repeat the worker's search or test sequence unless evidence is missing, unreliable or affected by integration. Return local defects to their owner; the lead keeps hard diagnosis and final acceptance.
 
-These are routing observations, not a price benchmark. Cached instructions and repository context differed between runs. Judge economy by whether the brief plus lead review is cheaper than direct lead execution.
+## Judge the result
+
+When usage data is available, compare worker cost plus lead dispatch, review and repair against estimated direct lead work for the same accepted outcome. Separate observed overhead from assumed replacement cost. Count cached input and output at their respective rates; reasoning is already part of output. Do not infer savings from token counts or the worker price ratio alone, or promise a fixed saving percentage.

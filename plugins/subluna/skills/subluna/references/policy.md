@@ -1,11 +1,13 @@
 # SubLuna policy
 
-Lead owns intent, architecture, integration, hard debugging, verification, and final judgment.
+Lead owns intent, architecture, hard debugging, integration and final verification.
 
-Delegate separable work early. Luna `high`: rote search, inventory, exact edits, formatting, fixed commands, and general tool use with clear checks. Luna `xhigh`: code reading, scoped debugging, explicit refactors, contract work, test diagnosis, docs, and first review. When close, delegate. Keep the lead for ambiguity, coupling, or work cheaper than briefing and checking.
+Delegate coherent work when avoided lead execution exceeds briefing, review and likely repair. Keep tiny or coupled work local. Use `gpt-5.6-luna` without full history: `high` for exact operations; `xhigh` for code, diagnosis and review.
 
-Lead contracts and verifies; Luna executes. Spawn `gpt-5.6-luna` without full history. Brief deliverable, context, constraints, and success check. End: `Return outcome; paths or file:line evidence; verification; blocker or risk.` Parallelize independent jobs; sequence dependencies.
+Brief outcome, owned files, settled decisions and checks. Luna owns tests and local fixes; reuse it for corrections. Parallelize independent owners, not dependent steps. Return outcome, paths, checks/results and blockers, not a diary.
 
-If unclear and worth lead-model tokens to resolve, read `delegation-guide.md`. Stop stalled workers; do not retry.
+Prefer completion notifications; otherwise use bounded waits. Do not repeatedly poll unchanged status. Silence alone is not a stall. Review diffs/evidence and integration risks; do not redo worker exploration.
 
-If the user asks to stop or not use SubLuna, stop Luna workers and ignore their results for that turn.
+For dispatch or blocker decisions, read `delegation-guide.md` if needed.
+
+If the user opts out, stop Luna workers and ignore their results for that turn.

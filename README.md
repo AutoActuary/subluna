@@ -4,7 +4,7 @@
 
 Lead-model judgment, Luna execution.
 
-SubLuna is a Codex plugin that gives Sol and Astra user turns a compact delegation policy. The lead keeps framing, architecture, integration, verification, and final judgment. Luna handles bounded work that can be briefed and checked cheaply, with close calls routed toward Luna.
+SubLuna is a Codex plugin that gives Sol and Astra user turns a compact delegation policy. The lead keeps framing, architecture, integration, verification, and final judgment. Luna owns coherent work packages, including implementation, tests, and local fixes, when they can be briefed and checked at an appropriate cost.
 
 It sends no policy tokens to Terra, Luna, or other models. Codex still starts the small native gate because `UserPromptSubmit` does not support model matchers. Say `no subluna` to disable it for one turn. Avoid `$subluna` and `/subluna` in an opt-out because the composer can treat them as explicit skill invocations.
 
@@ -73,4 +73,4 @@ Linux/macOS: sh scripts/subluna.sh doctor
 
 Run `cargo test --manifest-path native-hook/Cargo.toml`, build the release runtime, set `SUBLUNA_RUNTIME_BINARY` to that binary, then run the Python suite. The setup agent should also locate and run Codex's `validate_plugin.py` and `quick_validate.py` against `plugins/subluna` and `plugins/subluna/skills/subluna`.
 
-The optional [delegation guide](plugins/subluna/skills/subluna/references/delegation-guide.md) records the tested mapping, limits, and brief format. It is loaded only when the compact policy leaves a worthwhile ambiguity.
+The optional [delegation guide](plugins/subluna/skills/subluna/references/delegation-guide.md) describes delegation limits and the brief format. It is loaded only when the compact policy leaves a worthwhile ambiguity.
