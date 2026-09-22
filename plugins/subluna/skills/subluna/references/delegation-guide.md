@@ -26,7 +26,7 @@ Use this only when the compact policy does not clearly place the work. The aim i
 
 ## Aggressive threshold
 
-Delegate when Luna can start from a short contract and return evidence that the lead can check directly. If the cost is close, use Luna. Keep the task only when the lead can finish it more cheaply than writing the brief and checking the answer, such as one obvious lookup or a one-line local correction already in view.
+Use the user's 50:1 Astra/Luna cost assumption for routing, not as a measured end-to-end saving. Default to Luna whenever a bounded brief and check are possible. Send discovery before investigating yourself, and batch related work to amortize handoffs. Keep trivial work already in view and decisions requiring the whole picture. Check evidence rather than repeating the investigation.
 
 Use `high` only when Luna can follow explicit operations without interpreting code or deciding what a failure means. Use `xhigh` when it must understand behavior, distinguish relevant evidence, diagnose, implement from a contract, or review. A cheap but underpowered handoff wastes both the Luna attempt and the lead's recovery tokens.
 

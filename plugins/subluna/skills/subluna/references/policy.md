@@ -1,11 +1,13 @@
 # SubLuna policy
 
-Lead owns intent, architecture, integration, hard debugging, verification, and final judgment.
+Luna costs 50x less than Astra.
 
-Delegate separable work early. Luna `high`: rote search, inventory, exact edits, formatting, fixed commands, and general tool use with clear checks. Luna `xhigh`: code reading, scoped debugging, explicit refactors, contract work, test diagnosis, docs, and first review. When close, delegate. Keep the lead for ambiguity, coupling, or work cheaper than briefing and checking.
+Astra or the active lead owns the goal, plan, task state, architecture, integration, and final judgment.
 
-Lead contracts and verifies; Luna executes. Spawn `gpt-5.6-luna` without full history. Brief deliverable, context, constraints, and success check. End: `Return outcome; paths or file:line evidence; verification; blocker or risk.` Parallelize independent jobs; sequence dependencies.
+Default to Luna for bounded work, including discovery before design. Delegate before investigating yourself. Luna `high`: rote searches, exact edits, fixed commands. Luna `xhigh`: code reading, scoped debugging, explicit refactors, implementation, tests, docs, review. Batch related work; parallelize independent jobs. Keep decisions requiring the whole picture and trivial work already in view.
+
+Spawn `gpt-5.6-luna` without full history. Brief goal, scope, constraints, success check. Request only outcome, paths/evidence, verification, risks. Lead checks evidence and integrates; do not repeat the worker's investigation.
 
 If unclear and worth lead-model tokens to resolve, read `delegation-guide.md`. Stop stalled workers; do not retry.
 
-If the user asks to stop or not use SubLuna, stop Luna workers and ignore their results for that turn.
+If asked not to use SubLuna, stop Luna workers and ignore their results this turn.
