@@ -21,7 +21,7 @@ from typing import Any
 PLUGIN = "subluna"
 MARKETPLACE = "subluna"
 MARKETPLACE_FILE = Path(".agents/plugins/marketplace.json")
-RUNTIME_VERSION = "v0.3.2"
+RUNTIME_VERSION = "v0.3.3"
 RUNTIME_REPOSITORY = "https://github.com/AutoActuary/subluna/releases/download"
 
 
@@ -177,7 +177,7 @@ def app_server_request(method: str, params: dict[str, Any]) -> Any:
                     "clientInfo": {
                         "name": "subluna_doctor",
                         "title": "SubLuna doctor",
-                        "version": "0.3.2",
+                        "version": "0.3.3",
                     }
                 },
             }
